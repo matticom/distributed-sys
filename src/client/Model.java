@@ -8,14 +8,15 @@ import java.util.List;
 import models.PN_Entry;
 import repository.Repository;
 import services.PhonebookSearchService;
+import services.SearchService;
 
 public class Model {
 
 	protected List<PN_Entry> phoneBookList;
 	protected PropertyChangeSupport propertyChangeSupport;
-	protected PhonebookSearchService searchService;
+	protected SearchService searchService;
 	
-	public Model(PhonebookSearchService searchService) {
+	public Model(SearchService searchService) {
 		propertyChangeSupport = new PropertyChangeSupport(this);
 		this.searchService = searchService;
 	}

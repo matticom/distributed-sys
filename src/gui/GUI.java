@@ -27,7 +27,8 @@ public class GUI extends JPanel implements PropertyChangeListener {
 	protected ControlLabel phoneNumberLabel;
 	protected ControlTextField nameTF;
 	protected ControlTextField phoneNumberTF;
-	protected ControlLabel feedback;
+	protected ControlLabel inputFeedback;
+	protected ControlLabel nothingFound;
 
 	protected final int X_START_LBL = 50;
 	protected final int X_START_TF = 160;
@@ -65,9 +66,12 @@ public class GUI extends JPanel implements PropertyChangeListener {
 		nameLabel = new ControlLabel("Name", X_START_LBL, 80, LABEL_WIDTH, HEIGHT, this);
 		phoneNumberTF = new ControlTextField("", X_START_TF, 110, TEXTFIELD_WIDTH, HEIGHT, this);
 		phoneNumberLabel = new ControlLabel("Telefonnummer", X_START_LBL, 110, LABEL_WIDTH, HEIGHT, this);
-		feedback = new ControlLabel("Die Felder dürfen nicht leer sein!", X_START_LBL, 140, 200, HEIGHT, this);
-		feedback.setForeground(Color.RED);
-		feedback.setVisible(false);
+		inputFeedback = new ControlLabel("Die Felder dürfen nicht leer sein!", X_START_LBL, 140, 200, HEIGHT, this);
+		inputFeedback.setForeground(Color.RED);
+		inputFeedback.setVisible(false);
+		nothingFound = new ControlLabel("Keine passenden Einträge gefunden!", 280, 460, 300, HEIGHT, this);
+		nothingFound.setForeground(Color.RED);
+		nothingFound.setVisible(false);
 		searchBtn = new ControlButton("Suchen", X_START_BTN, 200, BUTTON_WIDTH,	HEIGHT, null, null, this);
 		exitBtn = new ControlButton("Exit", X_START_BTN, 230, BUTTON_WIDTH,	HEIGHT, null, null, this);
 		
@@ -84,20 +88,22 @@ public class GUI extends JPanel implements PropertyChangeListener {
 	}
 
 	protected void fillTable(List<PN_Entry> phoneBookList) {
-		tableModel = new TableModel(phoneBookList);
-		table.setModel(tableModel);
-		DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
-		centerRenderer.setHorizontalAlignment(JLabel.CENTER);
-		table.getColumnModel().getColumn(0).setCellRenderer(centerRenderer);
-		table.getColumnModel().getColumn(1).setCellRenderer(centerRenderer);
+		if (phoneBookList.isEmpty()) {
+			nothingFound.setVisible(true);
+			tableModel = new TableModel(phoneBookList);
+			table.setModel(tableModel);
+		} else {
+			setTable(phoneBookList);
+		}
+		
 	}
 
 	protected void validateControls() {
 		String searchParam = getSearchParam();
 		if (searchParam.equals("Name=&Nummer=")) {
-			feedback.setVisible(true);
+			inputFeedback.setVisible(true);
 		} else {
-			feedback.setVisible(false);
+			inputFeedback.setVisible(false);
 			model.startSearch(searchParam);
 		}
 
@@ -105,5 +111,15 @@ public class GUI extends JPanel implements PropertyChangeListener {
 
 	protected String getSearchParam() {
 		return "Name=" + nameTF.getText() + "&Nummer=" + phoneNumberTF.getText();
+	}
+	
+	protected void setTable(List<PN_Entry> phoneBookList) {
+		nothingFound.setVisible(false);
+		tableModel = new TableModel(phoneBookList);
+		table.setModel(tableModel);
+		DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+		centerRenderer.setHorizontalAlignment(JLabel.CENTER);
+		table.getColumnModel().getColumn(0).setCellRenderer(centerRenderer);
+		table.getColumnModel().getColumn(1).setCellRenderer(centerRenderer);
 	}
 }

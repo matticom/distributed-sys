@@ -20,7 +20,7 @@ public class Repository {
 		phoneBookList.add(new PN_Entry("Klein", 3627));
 		phoneBookList.add(new PN_Entry("Zanan", 3462));
 		phoneBookList.add(new PN_Entry("Cäsar", 3676));
-		phoneBookList.add(new PN_Entry("Meier", 3627));
+		phoneBookList.add(new PN_Entry("Hüpp", 3627));
 	}
 
 	public List<PN_Entry> getPhoneBookList() {
