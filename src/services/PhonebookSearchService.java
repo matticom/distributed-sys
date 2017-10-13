@@ -24,6 +24,8 @@ public class PhonebookSearchService implements SearchService {
 	protected List<PN_Entry> foundPhoneNumberEntries;
 	
 	protected Map<String, Boolean> emptinessFeedback;
+	protected final String NAME_MAP_KEY = "NAME";
+	protected final String PHONENUMBER_MAP_KEY = "PHONE";
 
 	public PhonebookSearchService(Repository repo) {
 		this.repo = repo;
@@ -33,8 +35,8 @@ public class PhonebookSearchService implements SearchService {
 
 	@Override
 	public List<PN_Entry> searchWithParams(String params) {
-		initializeMap();
-		decodeParams(params);
+		initializeFeedbackMap();
+		parseParams(params);
 		analyzeTasks();
 
 		if (nameSearchNeeded) {
@@ -57,13 +59,13 @@ public class PhonebookSearchService implements SearchService {
 	protected void searchNames(String name) {
 		List<PN_Entry> foundEntry = new ArrayList<PN_Entry>();
 		for (PN_Entry entry : repo.getPhoneBookList()) {
-			if (entry.getName().equals(name)) {
+			if (entry.getName().equalsIgnoreCase(name)) {
 				foundEntry.add(entry);
 			}
 		}
 		foundNameEntries = foundEntry;
 		if (!foundNameEntries.isEmpty()) {
-			emptinessFeedback.put("name", false);
+			emptinessFeedback.put(NAME_MAP_KEY, false);
 		}
 	}
 
@@ -76,7 +78,7 @@ public class PhonebookSearchService implements SearchService {
 		}
 		foundPhoneNumberEntries = foundEntry;
 		if (!foundPhoneNumberEntries.isEmpty()) {
-			emptinessFeedback.put("phoneNumber", false);
+			emptinessFeedback.put(PHONENUMBER_MAP_KEY, false);
 		}
 	}
 
@@ -106,20 +108,20 @@ public class PhonebookSearchService implements SearchService {
 		return emptinessFeedback;
 	}
 	
-	protected void initializeMap() {
+	protected void initializeFeedbackMap() {
 		emptinessFeedback = new HashMap<String, Boolean>();
-		emptinessFeedback.put("name", true);
-		emptinessFeedback.put("phoneNumber", true);
+		emptinessFeedback.put(NAME_MAP_KEY, true);
+		emptinessFeedback.put(PHONENUMBER_MAP_KEY, true);
 	}
 	
-	protected void decodeParams(String params) {
+	protected void parseParams(String params) {
 		int startIdxName = params.indexOf("=") + 1;
 		int endIdxName = params.indexOf("&");
 		int startIdxPhoneNumber = params.indexOf("=", startIdxName) + 1;
 		int endIdxPhoneNumber = params.length();
-		name = params.substring(startIdxName, endIdxName);
+		name = params.substring(startIdxName, endIdxName).trim();
 		try {
-			phoneNumber = Integer.parseInt(params.substring(startIdxPhoneNumber, endIdxPhoneNumber));
+			phoneNumber = Integer.parseInt(params.substring(startIdxPhoneNumber, endIdxPhoneNumber).trim());
 		} catch (NumberFormatException e) {
 			phoneNumber = 0;
 			System.out.println("Keine Zahl!");

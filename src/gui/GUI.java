@@ -48,6 +48,9 @@ public class GUI extends JPanel implements PropertyChangeListener {
 	protected TableModel tableModel;
 	protected JTable table;
 	protected JScrollPane scrollPane;
+	
+	protected final String NAME_MAP_KEY = "NAME";
+	protected final String PHONENUMBER_MAP_KEY = "PHONE";
 
 	public GUI(Model model, ControlsValidator validator) {
 		this.model = model;
@@ -128,20 +131,19 @@ public class GUI extends JPanel implements PropertyChangeListener {
 	}
 
 	protected void setNothingFoundText(Map<String, Boolean> emptinessFeedback) {
-		boolean nameIsEmpty = emptinessFeedback.get("name");
-		boolean phoneNumberIsEmpty = emptinessFeedback.get("phoneNumber");
+		boolean nameIsEmpty = emptinessFeedback.get(NAME_MAP_KEY);
+		boolean phoneNumberIsEmpty = emptinessFeedback.get(PHONENUMBER_MAP_KEY);
 		boolean nameIsOK = validator.getNameStatus().equals(FieldsStatus.NameOK);
 		boolean phoneNumberIsOK = validator.getPhoneNumberStatus().equals(FieldsStatus.PhoneOK);
 		String searchTerms = new String();
-		
 		if (nameIsOK && nameIsEmpty) {
-			searchTerms += nameTF.getText();
+			searchTerms += nameTF.getText().trim();
 		}
 		if (nameIsOK && phoneNumberIsOK && nameIsEmpty && phoneNumberIsEmpty) {
 			searchTerms += " / ";
 		}
 		if (phoneNumberIsOK && phoneNumberIsEmpty) {
-			searchTerms += phoneNumberTF.getText();
+			searchTerms += phoneNumberTF.getText().trim();
 		}
 		if (nameIsOK && nameIsEmpty || phoneNumberIsOK && phoneNumberIsEmpty) {
 			nothingFound.setText("Die Suche nach " + searchTerms + " war erfolglos");
