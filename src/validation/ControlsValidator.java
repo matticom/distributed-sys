@@ -125,7 +125,7 @@ public class ControlsValidator {
 		return isFeedbackVisible;
 	}
 
-	public boolean isReturn() {
+	public boolean inputIsInvalid() {
 		return isReturn;
 	}
 

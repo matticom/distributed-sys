@@ -87,7 +87,7 @@ public class PhonebookSearchService implements SearchService {
 			try {
 				nameSearchThread.join();
 			} catch (InterruptedException e) {
-				System.out.println("Thread wurde abgebrochen: " + e.getMessage());
+				System.out.println("Name-Thread wurde abgebrochen: " + e.getMessage());
 			}
 		}
 	}
@@ -97,7 +97,7 @@ public class PhonebookSearchService implements SearchService {
 			try {
 				phoneNumberSearchThread.join();
 			} catch (InterruptedException e) {
-				System.out.println("Thread wurde abgebrochen: " + e.getMessage());
+				System.out.println("Phonenumber-Thread wurde abgebrochen: " + e.getMessage());
 				;
 			}
 		}

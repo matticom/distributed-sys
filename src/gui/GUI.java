@@ -94,14 +94,18 @@ public class GUI extends JPanel implements PropertyChangeListener {
 
 	protected void validateControls() {
 		validator.checkFields(nameTF.getText(), phoneNumberTF.getText());
-		inputFeedback.setText(validator.getFeedbackText());
-		inputFeedback.setVisible(validator.isFeedbackVisible());
-		if (validator.isReturn()) {
+		displayInputFeedback();
+		if (validator.inputIsInvalid()) {
 			return;
 		} else {
 			String searchParam = getSearchParam(nameTF.getText(), phoneNumberTF.getText());
 			model.startSearch(searchParam);
 		}
+	}
+	
+	protected void displayInputFeedback() {
+		inputFeedback.setText(validator.getFeedbackText());
+		inputFeedback.setVisible(validator.isFeedbackVisible());
 	}
 
 	protected String getSearchParam(String name, String phoneNumber) {

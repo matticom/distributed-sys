@@ -54,6 +54,4 @@ public class Model {
 	public void removePropertyChangeListener(PropertyChangeListener l) {
 		propertyChangeSupport.removePropertyChangeListener(l);
 	}
-
-	
 }
