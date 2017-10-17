@@ -38,22 +38,36 @@ public class PhonebookSearchService implements SearchService {
 		initializeFeedbackMap();
 		parseParams(params);
 		analyzeTasks();
-
-		if (nameSearchNeeded) {
-			nameSearchThread = new Thread(() -> searchNames(name));
-			nameSearchThread.start();
-		}
-
-		if (phoneNumberSearchNeeded) {
-			phoneNumberSearchThread = new Thread(() -> searchPhoneNumbers(phoneNumber));
-			phoneNumberSearchThread.start();
-		}
-
-		joinNameThread();
-		joinPhoneNumberThread();
+		startThreads();
 		List<PN_Entry> allfoundEntries = mergeResults();
 		clearResources();
 		return allfoundEntries;
+	}
+	
+	protected void startThreads() {
+		try {
+			if (nameSearchNeeded && phoneNumberSearchNeeded) {
+				nameSearchThread = new Thread(() -> searchNames(name));
+				phoneNumberSearchThread = new Thread(() -> searchPhoneNumbers(phoneNumber));
+				nameSearchThread.start();
+				phoneNumberSearchThread.start();
+				nameSearchThread.join();
+				phoneNumberSearchThread.join();
+			} else {
+				if (nameSearchNeeded) {
+					nameSearchThread = new Thread(() -> searchNames(name));
+					nameSearchThread.start();
+					nameSearchThread.join();
+				}
+				if (phoneNumberSearchNeeded) {
+					phoneNumberSearchThread = new Thread(() -> searchPhoneNumbers(phoneNumber));
+					phoneNumberSearchThread.start();
+					phoneNumberSearchThread.join();
+				}
+			}
+		} catch (InterruptedException e) {
+			System.out.println("Name-Thread wurde abgebrochen: " + e.getMessage());
+		}
 	}
 
 	protected void searchNames(String name) {
@@ -81,28 +95,7 @@ public class PhonebookSearchService implements SearchService {
 			emptinessFeedback.put(PHONENUMBER_MAP_KEY, false);
 		}
 	}
-
-	protected void joinNameThread() {
-		if (nameSearchThread != null) {
-			try {
-				nameSearchThread.join();
-			} catch (InterruptedException e) {
-				System.out.println("Name-Thread wurde abgebrochen: " + e.getMessage());
-			}
-		}
-	}
-
-	protected void joinPhoneNumberThread() {
-		if (phoneNumberSearchThread != null) {
-			try {
-				phoneNumberSearchThread.join();
-			} catch (InterruptedException e) {
-				System.out.println("Phonenumber-Thread wurde abgebrochen: " + e.getMessage());
-				;
-			}
-		}
-	}
-
+	
 	@Override
 	public Map<String, Boolean> getFeedBack() {
 		return emptinessFeedback;

@@ -16,11 +16,11 @@ public class Repository {
 		phoneBookList.add(new PN_Entry("Walter", 5555));
 		phoneBookList.add(new PN_Entry("Ernst", 4444));
 		phoneBookList.add(new PN_Entry("von Witt", 3333));
-		phoneBookList.add(new PN_Entry("Cäsar", 9999));
+		phoneBookList.add(new PN_Entry("CÃ¤sar", 9999));
 		phoneBookList.add(new PN_Entry("Klein", 3333));
 		phoneBookList.add(new PN_Entry("Zanan", 1111));
-		phoneBookList.add(new PN_Entry("Cäsar", 4444));
-		phoneBookList.add(new PN_Entry("Hüpp", 3333));
+		phoneBookList.add(new PN_Entry("CÃ¤sar", 4444));
+		phoneBookList.add(new PN_Entry("HÃ¼pp", 3333));
 	}
 
 	public List<PN_Entry> getPhoneBookList() {
