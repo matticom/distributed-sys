@@ -1,3 +1,10 @@
+// Autor: 			Matthias Kugler
+// Erstelldatum: 	17.10.2017
+// 
+// Funktion der Klasse:
+// - validiert die Benutzereingaben in die Textfelder Name/Telefonnummer
+// - checkt, ob nur whitespace oder gar nichts oder etwas gültiges eingegeben wurde
+
 package validation;
 
 import java.util.regex.Matcher;
@@ -83,7 +90,7 @@ public class ControlsValidator {
 				isReturn = true;
 				break;
 			case PhoneBlank:
-				feedbackText = "Die Felder d�rfen nicht leer sein!";
+				feedbackText = "Die Felder dürfen nicht leer sein!";
 				isFeedbackVisible = true;
 				isReturn = true;
 				break;

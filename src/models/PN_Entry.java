@@ -1,3 +1,9 @@
+// Autor: 			Matthias Kugler
+// Erstelldatum: 	17.10.2017
+// 
+// Funktion der Klasse:
+// - Modelklasse für einen Telefonbucheintrag
+
 package models;
 
 public class PN_Entry {

@@ -1,3 +1,9 @@
+// Autor: 			Matthias Kugler
+// Erstelldatum: 	17.10.2017
+// 
+// Funktion der Klasse:
+// - Datenmodel für die JTable
+
 package gui;
 
 import java.util.List;

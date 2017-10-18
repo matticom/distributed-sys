@@ -1,3 +1,9 @@
+// Autor: 			Matthias Kugler
+// Erstelldatum: 	17.10.2017
+// 
+// Funktion der Klasse:
+// - stellt eine Liste mit Telefonbucheinträgen zur Verfügung
+
 package repository;
 
 import java.util.ArrayList;

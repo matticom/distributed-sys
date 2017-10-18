@@ -57,7 +57,7 @@ public class GUI extends JPanel implements PropertyChangeListener {
 	protected JTable table;
 	protected JScrollPane scrollPane;
 	
-	// Keys für den Map speichert welche Suche erfolgreich war
+	// Keys für den Map, welcher speichert welche Suche erfolgreich war
 	protected final String NAME_MAP_KEY = "NAME";
 	protected final String PHONENUMBER_MAP_KEY = "PHONE";
 
@@ -118,7 +118,7 @@ public class GUI extends JPanel implements PropertyChangeListener {
 		}
 	}
 	
-	// die Anzeige des Feedbacks wird konfiguriert, entsprechend wie es der Validator ausgewertet hat 
+	// die Anzeige des Input Feedbacks wird konfiguriert, entsprechend wie es der Validator ausgewertet hat 
 	protected void displayInputFeedback() {
 		inputFeedback.setText(validator.getFeedbackText());
 		inputFeedback.setVisible(validator.isFeedbackVisible());
@@ -134,7 +134,7 @@ public class GUI extends JPanel implements PropertyChangeListener {
 		if (validator.getPhoneNumberStatus().equals(FieldsStatus.PhoneSpaces)) {
 			phoneNumber = "";
 		}
-		// alle anderen Eingaben (leer, bestimmte Eingabe)
+		// alle anderen Eingaben (leer, gültige Eingaben)
 		return "Name=" + name + "&Nummer=" + phoneNumber;
 	}
 
@@ -182,6 +182,8 @@ public class GUI extends JPanel implements PropertyChangeListener {
 		if (nameIsOK && nameIsEmpty || phoneNumberIsOK && phoneNumberIsEmpty) {
 			nothingFound.setText("Die Suche nach " + searchTerms + " war erfolglos");
 			nothingFound.setVisible(true);
+		} else {
+			nothingFound.setVisible(false);
 		}
 	}
 

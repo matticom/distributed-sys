@@ -14,8 +14,6 @@ import java.util.List;
 import java.util.Map;
 
 import models.PN_Entry;
-import repository.Repository;
-import services.PhonebookSearchService;
 import services.SearchService;
 
 public class Model {
@@ -47,9 +45,9 @@ public class Model {
 	public void startSearch(String searchParam){
 		System.out.println("Dienst wird gestartet mit: " + searchParam);
 		// Suchservice wird aufgerufen und Ergebnisse gespeichert
-		this.resultList = searchService.searchWithParams(searchParam);
+		resultList = searchService.searchWithParams(searchParam);
 		// Feedback aus dem Suchservice, welche Suche erfolgreich war
-		this.emptinessFeedback = searchService.getFeedBack();
+		emptinessFeedback = searchService.getFeedBack();
 		// Event feuern an GUI
 		generateAndFirePropertyChangeEvent();
 	}
